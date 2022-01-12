@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@500&display=swap');
+@media (max-width: 480px) {
+    body {
+        background-color: rgb(9, 11, 22);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color: aliceblue;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    
+    /* header {
+        background-color: #58544d;
+        border-radius: 10px;
+        padding: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin: 0;
+    }
+     */
+     
+    header h1 {
+        font-family: 'Merriweather Sans';
+        background-color: #ff9900;
+        border-radius: 10px;
+        padding: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-top: 3rem;
+    }
+    
+    form * {
+        margin-bottom: 0.3rem;
+    }
+
+    select {
+        width: 6rem;
+    }
+
+    input {
+        width: 4rem
+    }
+}
