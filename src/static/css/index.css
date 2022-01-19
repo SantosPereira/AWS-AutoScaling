@@ -29,18 +29,22 @@ header h1 {
 }
 
 section {
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin-top: 4rem;
+  margin-left: 6rem;
+  margin-right: 6rem;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
-form * {
-  margin-bottom: 0.3rem;
+
+form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 select {
@@ -52,13 +56,13 @@ input {
 }
 
 #alerta-request {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #d4d4d4;
-    margin-top: 5rem;
-    border-radius: 10px;
-    padding: 1rem;
-    padding-top: 0.1rem;
-    color: #000000;
+  font-family: "Courier New", Courier, monospace;
+  background-color: #d4d4d4;
+  margin-top: 4rem;
+  border-radius: 10px;
+  padding: 1rem;
+  padding-top: 0.1rem;
+  color: #000000;
 }
 
 @media (max-width: 480px) {

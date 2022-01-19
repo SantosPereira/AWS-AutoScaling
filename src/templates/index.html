@@ -13,9 +13,10 @@
   </head>
 
   <body>
-    <header>
-      <h1>AutoScaling POC</h1>
-      <h3>Prova de conceito sobre escalabilidade horinzontal na AWS</h3>
+    <div id="container">
+      <header>
+        <h1>AutoScaling POC</h1>
+        <h3>Prova de conceito sobre escalabilidade horinzontal na AWS</h3>
     </header>
     <section>
       <p>
@@ -25,25 +26,30 @@
         as requisições.
       </p>
       <form action="{{ url_for('geraCarga') }}" method="post">
-        <label>Selecione a taxa de consumo de CPU</label>
-        <select name="taxaConsumo">
-          <option value="0.3">30%</option>
-          <option value="0.5">50%</option>
-          <option value="0.8">80%</option>
-          <option value="1.0">100%</option>
-        </select>
-
-        <label>Selecione a duração do processamento</label>
-        <select name="duracao">
-          <option value="10">10 segundos</option>
-          <option value="30">30 segundos</option>
-          <option value="60">1 minuto</option>
-          <option value="120">2 minutos</option>
-        </select>
-
+        <div>
+          <label>Selecione a taxa de consumo de CPU</label>
+          <select name="taxaConsumo">
+            <option value="0.3">30%</option>
+            <option value="0.5">50%</option>
+            <option value="0.8">80%</option>
+            <option value="1.0">100%</option>
+          </select>
+        </div>
+        
+        <div>
+          <label>Selecione a duração do processamento</label>
+          
+          <select name="duracao">
+            <option value="10">10 segundos</option>
+            <option value="30">30 segundos</option>
+            <option value="60">1 minuto</option>
+            <option value="120">2 minutos</option>
+          </select>
+        </div>
+        
         <input type="button" onmousedown="enviaForm()" value="Enviar" />
       </form>
-
+      
       <div id="alerta-request" style="visibility: hidden">
         <h3>Requisição sendo processada no servidor</h3>
         <p>
@@ -53,6 +59,7 @@
         </p>
       </div>
     </section>
+    </div>
     <script>
       function enviaForm() {
         /* Cria uma requisição do tipo POST */
@@ -60,9 +67,18 @@
           method: "POST",
           body: new FormData(document.querySelector("form")),
         });
-
+        
         var alertaRequest = document.getElementById("alerta-request");
         alertaRequest.style.visibility = "visible";
+
+        alertaRequest.innerHTML = `
+        <h3>Requisição sendo processada no servidor</h3>
+        <p>
+          Conforme necessário o serviço de Auto Scaling provisionará mais
+          máquinas para atender as requisições as eliminando quando não forem
+          mais necessárias
+        </p>
+        `;
 
         fetch(request)
           .then((resposta) => {
