@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="css/index.css"
+      type="text/css"
+    />
+    <title>AutoScaling</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <header>
+        <h1>AutoScaling POC</h1>
+        <h3>Prova de conceito sobre escalabilidade horinzontal na AWS</h3>
+    </header>
+    <section>
+      <p>
+        Essa aplicação consiste num formulário para selecionar a carga a ser
+        executada no back-end, afim de que o serviço de auto scaling da AWS,
+        configurado por nós, venha a provisionar novas máquinas para responder
+        as requisições.
+      </p>
+      <form action="http://load-balancer-988720264.us-east-1.elb.amazonaws.com/carga" method="post">
+        <div>
+          <label>Selecione a taxa de consumo de CPU</label>
+          <select name="taxaConsumo">
+            <option value="0.3">30%</option>
+            <option value="0.5">50%</option>
+            <option value="0.8">80%</option>
+            <option value="1.0">100%</option>
+          </select>
+        </div>
+        
+        <div>
+          <label>Selecione a duração do processamento</label>
+          
+          <select name="duracao">
+            <option value="10">10 segundos</option>
+            <option value="30">30 segundos</option>
+            <option value="60">1 minuto</option>
+            <option value="120">2 minutos</option>
+            <option value="600">10 minutos</option>
+          </select>
+        </div>
+        
+        <input type="button" onmousedown="enviaForm()" value="Enviar" />
+      </form>
+      
+      <div id="alerta-request" style="visibility: hidden">
+        <h3>Requisição sendo processada no servidor</h3>
+        <p>
+          Conforme necessário o serviço de Auto Scaling provisionará mais
+          máquinas para atender as requisições as eliminando quando não forem
+          mais necessárias
+        </p>
+      </div>
+    </section>
+    </div>
+    <script>
+      function enviaForm() {
+        /* Cria uma requisição do tipo POST */
+        const request = new Request("http://load-balancer-988720264.us-east-1.elb.amazonaws.com/carga", {
+          method: "POST",
+          body: new FormData(document.querySelector("form")),
+        });
+        
+        var alertaRequest = document.getElementById("alerta-request");
+        alertaRequest.style.visibility = "visible";
+
+        alertaRequest.innerHTML = `
+        <h3>Requisição sendo processada no servidor</h3>
+        <p>
+          Conforme necessário o serviço de Auto Scaling provisionará mais
+          máquinas para atender as requisições as eliminando quando não forem
+          mais necessárias
+        </p>
+        `;
+
+        fetch(request)
+          .then((resposta) => {
+            return resposta.json();
+          })
+          .then((resposta) => {
+            if (parseInt(resposta["status"]) == 201) {
+              alertaRequest.innerHTML = `
+                            <h3>Requisição processada com sucesso</h3>
+                        `;
+            } else {
+              alertaRequest.innerHTML = `
+                            <h3>Ocorreu uma erro interno no servidor</h3>
+                        `;
+            }
+          });
+      }
+    </script>
+  </body>
+</html>
