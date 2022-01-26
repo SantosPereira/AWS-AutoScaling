@@ -66,6 +66,7 @@
         /* Cria uma requisição do tipo POST */
         const request = new Request("http://load-balancer-988720264.us-east-1.elb.amazonaws.com/carga", {
           method: "POST",
+          headers: new Headers().append('Access-Control-Allow-Origin','*'),
           body: new FormData(document.querySelector("form")),
         });
         
