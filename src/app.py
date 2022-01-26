@@ -12,9 +12,11 @@ def main():
 @app.route("/carga", methods=["POST"])
 def geraCarga():
     resposta = make_response(
+        jsonify(
         dados = {
             'status':201
         }
+        )
     )
     resposta.headers['Access-Control-Allow-Origin'] = '*'
     taxaConsumo = float(request.form['taxaConsumo'])
